@@ -68,3 +68,25 @@ Deleted: sha256:ef68f6734aa485edf13a8509fe60e4272428deaf63f446a441b79d47fc5d17d3
 $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
+
+## Exercise 1.3
+As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, we have to update apt-get repositories first, then install curl.
+```
+docker run -d --rm -it --name curler ubuntu:16.04 sh -c 'read website; sleep 3; curl http://$website' && docker exec curler apt-get update -y && docker exec curler apt-get install -y curl
+```
+
+To use the commandline of the *curler* container, I use the command
+```
+docker attach curler
+```
+Here I typed *google.com* to get
+```
+google.com
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+```
+The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
