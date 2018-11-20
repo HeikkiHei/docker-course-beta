@@ -88,7 +88,7 @@ $ docker attach curler
 ```
 To use the container for the weburl-curl. Here I typed *google.com* to get
 ```
-google.com
+$ google.com
 <HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
 <TITLE>301 Moved</TITLE></HEAD><BODY>
 <H1>301 Moved</H1>
@@ -111,7 +111,7 @@ $ docker attach curler
 ```
 Here I typed *google.com* to get
 ```
-google.com
+$ google.com
 <HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
 <TITLE>301 Moved</TITLE></HEAD><BODY>
 <H1>301 Moved</H1>
@@ -121,4 +121,22 @@ The document has moved
 ```
 The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
 
+## Exercise 1.4
+Creating my first own Dockerfile:
+```
+FROM node:latest
+EXPOSE 5000
+
+WORKDIR /homie
+COPY / .
+RUN npm install
+```
+To build the image:
+```
+$ docker build -t node-example .
+```
+And theeeeen to run the app:
+```
+docker run -d --name node-app -p 5000:5000 node-example sh -c 'npm start'
+```
 
