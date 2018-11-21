@@ -3,9 +3,9 @@ Rows with **$** signify a command on the command line. Code and command line out
 ## Exercise 1.1
 First I create 3 (named) nginx containers
 ```
-docker run --name nginx1 -d nginx
-docker run --name nginx2 -d nginx
-docker run --name nginx3 -d nginx
+$ docker run --name nginx1 -d nginx
+$ docker run --name nginx2 -d nginx
+$ docker run --name nginx3 -d nginx
 ```
 Then I see all of them are running
 ```
@@ -36,11 +36,11 @@ Done.
 ## Exercise 1.2
 You can see the original status of 
 ```
-docker ps -a
+$ docker ps -a
 ```
 from the end of the previous exercise, and the starting point of
 ```
-docker images
+$ docker images
 ```
 from the next code snippet.
 
@@ -133,7 +133,7 @@ $ docker run -d --rm -it --name ubucurler ubucurl sh -c 'read website; sleep 3; 
 ```
 And attach to it for the curling part
 ```
-docker attach ubucurler
+$ docker attach ubucurler
 ```
 Here I typed *google.com* to get
 ```
@@ -185,6 +185,6 @@ $ docker build -t node-example .
 ```
 And theeeeen to run the app:
 ```
-docker run -d --name node-app -p 5000:5000 node-example sh -c 'npm start'
+$ docker run -d --name node-app -p 5000:5000 node-example sh -c 'npm start'
 ```
 
