@@ -1,30 +1,35 @@
 ## Exercise 1.1
-
+First I create 3 (named) nginx containers
 ```
 docker run --name nginx1 -d nginx
 docker run --name nginx2 -d nginx
 docker run --name nginx3 -d nginx
-
+```
+Then I see all of them are running
+```
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
 95db0039cdb6        nginx               "nginx -g 'daemon of…"   3 seconds ago       Up 3 seconds        80/tcp              nginx3
 b75be34b9796        nginx               "nginx -g 'daemon of…"   8 seconds ago       Up 7 seconds        80/tcp              nginx2
 0e551c632ff9        nginx               "nginx -g 'daemon of…"   15 seconds ago      Up 14 seconds       80/tcp              nginx1
-
-
+```
+Next I stop 2 of the 3
+```
 $ docker stop nginx1
 nginx1
 
 $ docker stop nginx2
 nginx2
-
+```
+Once again, check the status. One is running, 2 are stopped.
+```
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS               NAMES
 95db0039cdb6        nginx               "nginx -g 'daemon of…"   33 seconds ago      Up 33 seconds              80/tcp              nginx3
 b75be34b9796        nginx               "nginx -g 'daemon of…"   38 seconds ago      Exited (0) 4 seconds ago                       nginx2
 0e551c632ff9        nginx               "nginx -g 'daemon of…"   45 seconds ago      Exited (0) 7 seconds ago                       nginx1
-
 ```
+Done.
 
 ## Exercise 1.2
 You can see the original status of 
