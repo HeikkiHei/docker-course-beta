@@ -197,12 +197,13 @@ EXPOSE 8000
 WORKDIR /homie
 COPY / .
 RUN npm install
+RUN touch logs.txt
 ```
 To build the image:
 ```
 $ docker build -t node-back-example .
 ```
-And theeeeen to run the app:
+And then to run the app:
 ```
-$ docker run -d --name node-back-app -p 8000:8000 node-example sh -c 'npm start'
+$ docker run -d --name node-back-app -p 8000:8000 node-back-example sh -c 'npm start'
 ```
