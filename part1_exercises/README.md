@@ -69,7 +69,7 @@ $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
 
-## Exercise 1.3 - The way of the material
+## Exercise 1.3 - The way of the early material
 As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, we have to update apt-get repositories first, then install curl.
 ```
 $ docker run -d --rm -it --name curler ubuntu:16.04 sh -c 'read website; sleep 3; curl http://$website'
@@ -98,6 +98,37 @@ The document has moved
 ```
 The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
 
+## Exercise 1.3 - The way of the material later on
+We can start by creating a Dockerfile, in which we have the curl installed.
+```
+FROM ubuntu:16.04
+
+WORKDIR /homie
+RUN apt-get update && apt-get install -y curl
+```
+Then we run following to have our own image with Ubuntu with curl:
+```
+$ docker build -t ubucurl .
+```
+And to finally run the container, we run
+```
+$ docker run -d --rm -it --name ubucurler ubucurl sh -c 'read website; sleep 3; curl http://$website'
+```
+And attach to it for the curling part
+```
+docker attach ubucurler
+```
+Here I typed *google.com* to get
+```
+$ google.com
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+```
+The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
 
 ## Exercise 1.3 - Alternative way
 As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, we have to update apt-get repositories first, then install curl.
