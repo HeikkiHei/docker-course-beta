@@ -87,7 +87,7 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 ```
 
 ## Exercise 1.3 - The way of the early material
-As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, we have to update apt-get repositories first, then install curl.
+As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, I have to update apt-get repositories first, then install curl.
 ```
 $ docker run -d --rm -it --name curler ubuntu:16.04 sh -c 'read website; sleep 3; curl http://$website'
 ```
@@ -113,21 +113,21 @@ The document has moved
 <A HREF="http://www.google.com/">here</A>.
 </BODY></HTML>
 ```
-The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
+The option *--rm* took care of the container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
 
 ## Exercise 1.3 - The way of the material later on
-We can start by creating a Dockerfile, in which we have the curl installed.
+I start by creating a Dockerfile, in which I have the curl installed.
 ```
 FROM ubuntu:16.04
 
 WORKDIR /homie
 RUN apt-get update && apt-get install -y curl
 ```
-Then we run following to have our own image with Ubuntu with curl:
+Then I run following to have my own image with Ubuntu with curl:
 ```
 $ docker build -t ubucurl .
 ```
-And to finally run the container, we run
+And to finally run the container, I run
 ```
 $ docker run -d --rm -it --name ubucurler ubucurl sh -c 'read website; sleep 3; curl http://$website'
 ```
@@ -145,10 +145,10 @@ The document has moved
 <A HREF="http://www.google.com/">here</A>.
 </BODY></HTML>
 ```
-The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
+The option *--rm* took care of the container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
 
 ## Exercise 1.3 - Alternative way
-As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, we have to update apt-get repositories first, then install curl.
+As the docker image I are using (Ubuntu 16.04) does not have curl installed beforehand, I have to install it. To get the installation running, I have to update apt-get repositories first, then install curl.
 ```
 $ docker run -d --rm -it --name curler ubuntu:16.04 sh -c 'read website; sleep 3; curl http://$website' && docker exec curler apt-get update -y && docker exec curler apt-get install -y curl
 ```
@@ -167,7 +167,7 @@ The document has moved
 <A HREF="http://www.google.com/">here</A>.
 </BODY></HTML>
 ```
-The option *--rm* took care of our container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
+The option *--rm* took care of the container and removed it after it closed after the curl, and also of course exited me from the container, as it did not exist anymore.
 
 ## Exercise 1.4
 Creating my first own Dockerfile:
@@ -188,3 +188,21 @@ And theeeeen to run the app:
 $ docker run -d --name node-app -p 5000:5000 node-example sh -c 'npm start'
 ```
 
+## Exercise 1.5
+Creating my second own Dockerfile:
+```
+FROM node:latest
+EXPOSE 8000
+
+WORKDIR /homie
+COPY / .
+RUN npm install
+```
+To build the image:
+```
+$ docker build -t node-back-example .
+```
+And theeeeen to run the app:
+```
+$ docker run -d --name node-back-app -p 8000:8000 node-example sh -c 'npm start'
+```
