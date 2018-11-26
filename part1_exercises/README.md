@@ -188,6 +188,28 @@ And theeeeen to run the app:
 $ docker run -d --name node-app -p 5000:5000 node-example sh -c 'npm start'
 ```
 
+## Exercise 1.4 - Alternative
+Creating my first own Dockerfile:
+```
+FROM node:latest
+EXPOSE 5000
+
+WORKDIR /homie
+COPY / .
+RUN npm install
+
+CMD npm start
+```
+To build the image:
+```
+$ docker build -t node-example .
+```
+And theeeeen to run the app:
+```
+$ docker run -d --name node-app -p 5000:5000 node-example
+```
+Notice the difference in the *Dockerfile* and the *docker run* command. The start command is now in the *Dockerfile*.
+
 ## Exercise 1.5
 Creating my second own Dockerfile:
 ```
@@ -198,12 +220,16 @@ WORKDIR /homie
 COPY / .
 RUN npm install
 RUN touch logs.txt
+
+CMD nmp start
 ```
+I use the image of the latest node. I expose the port 8000 and create a home folder. As the *Dockerfile* is in the project root, I copy the project root as is. Then I install the npm packages, create *logs.txt* and run the start command.  
 To build the image:
 ```
 $ docker build -t node-back-example .
 ```
 And then to run the app:
 ```
-$ docker run -d --name node-back-app -v $(pwd)/logs.txt:/homie/logs.txt -p 8000:8000 node-back-example sh -c 'npm start'
+$ docker run -d --name node-back-app -v $(pwd)/logs.txt:/homie/logs.txt -p 8000:8000 node-back-example
 ```
+To make sure the mount worked, I had to create the logs.txt file locally first. Otherwise, docker mounting would create a *logs.txt* folder, and the mount would not work.
