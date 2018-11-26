@@ -5,5 +5,8 @@ EXPOSE 8000
 
 WORKDIR /homie
 COPY / .
+
 RUN npm install
-RUN touch logs.txt
+RUN touch /homie/logs.txt
+
+CMD npm start

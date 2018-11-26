@@ -205,5 +205,5 @@ $ docker build -t node-back-example .
 ```
 And then to run the app:
 ```
-$ docker run -d --name node-back-app -p 8000:8000 node-back-example sh -c 'npm start'
+$ docker run -d --name node-back-app -v $(pwd)/logs.txt:/homie/logs.txt -p 8000:8000 node-back-example sh -c 'npm start'
 ```
