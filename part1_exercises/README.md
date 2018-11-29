@@ -181,11 +181,11 @@ RUN npm install
 ```
 To build the image:
 ```
-$ docker build -t node-example .
+$ docker build -t node--front-example .
 ```
 And theeeeen to run the app:
 ```
-$ docker run -d --name node-app -p 5000:5000 node-example sh -c 'npm start'
+$ docker run -d --name node-app -p 5000:5000 node-front-example sh -c 'npm start'
 ```
 
 ## Exercise 1.4 - Alternative
@@ -202,11 +202,11 @@ CMD npm start
 ```
 To build the image:
 ```
-$ docker build -t node-example .
+$ docker build -t node-front-example .
 ```
 And theeeeen to run the app:
 ```
-$ docker run -d --name node-app -p 5000:5000 node-example
+$ docker run -d --name node-app -p 5000:5000 node-front-example
 ```
 Notice the difference in the *Dockerfile* and the *docker run* command. The start command is now in the *Dockerfile*.
 
@@ -233,3 +233,31 @@ And then to run the app:
 $ docker run -d --name node-back-app -v $(pwd)/logs.txt:/homie/logs.txt -p 8000:8000 node-back-example
 ```
 To make sure the mount worked, I had to create the logs.txt file locally first. Otherwise, docker mounting would create a *logs.txt* folder, and the mount would not work.
+
+## Exercise 1.6
+
+Dockerfile for frontend:
+```
+FROM node:latest
+EXPOSE 5000
+
+WORKDIR /homie
+COPY / .
+RUN npm install
+
+CMD API_URL=http://localhost:8000 npm start
+```
+Dockerfile for backend:
+```
+FROM node:latest
+EXPOSE 8000
+
+WORKDIR /homie
+COPY / .
+
+RUN npm install nodemon@latest -D
+RUN touch /homie/logs.txt
+
+CMD FRONT_URL=http://localhost:5000 npm start
+```
+Notice the *nodemon@latest -D* because of the flatmap-stream -vulnerability.
