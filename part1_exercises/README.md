@@ -261,3 +261,46 @@ RUN touch /homie/logs.txt
 CMD FRONT_URL=http://localhost:5000 npm start
 ```
 Notice the *nodemon@latest -D* because of the flatmap-stream -vulnerability.
+
+## Exercise 1.7
+
+I decided to dockerize my ratebeer-app, which was made for another course. The app is made with Ruby on Rails, and the Dockerfile is as follows:
+
+```
+FROM ruby:2.5.1
+
+RUN bundle config --global frozen 1
+
+EXPOSE 3000
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+CMD rails s
+```
+Then of course I want to build and run the app:
+```
+$ docker build -t ratebeer .
+
+$ docker run -d --name rate-app -p 3000:3000  ratebeer
+```
+And to push it to Docker Hub, I use 
+```
+$ docker login
+
+$ docker tag ratebeer heikkihei/ratebeer
+
+$ docker push heikkihei/ratebeer 
+```
+The repository can be found at *https://hub.docker.com/r/heikkihei/ratebeer/*
+
+## Exercise 1.8
+SKIP FOR NOW!
+I will try and make it before Xmas.
